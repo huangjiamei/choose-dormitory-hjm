@@ -11,7 +11,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login); //加载布局
+        setContentView(R.layout.main); //加载布局
     }
 }
 

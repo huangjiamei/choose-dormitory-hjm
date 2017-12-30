@@ -19,6 +19,8 @@
             android:background="#104E8B"
             android:src="@drawable/sspku_logo" />
 
+
+
         <TextView
             android:id="@+id/login_name"
             android:layout_width="wrap_content"
@@ -27,10 +29,10 @@
             android:layout_marginTop="15dp"
             android:text="在线选宿舍系统"
             android:textColor="#000000"
-            android:textSize="20123sp"/>
+            android:textSize="23sp"/>
 
         <EditText
-            android:id="@+id/login_user"
+            android:id="@+id/login_usr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -76,7 +78,6 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="30dp"
             android:src="@drawable/sspku_map" />
-
 
     </LinearLayout>
 
