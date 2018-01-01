@@ -75,7 +75,7 @@ public class Login extends Activity implements View.OnClickListener{
             Toast.makeText(Login.this, "用户名和密码不能为空！", Toast.LENGTH_LONG).show();
             return;
         }
-        System.out.println("123");
+        //System.out.println("123");
 
         //获取网络数据
         final String address = "https://api.mysspku.com/index.php/V1/MobileCourse/Login?"
@@ -165,7 +165,12 @@ public class Login extends Activity implements View.OnClickListener{
             switch(msg.what) {
                 case LOGIN_SUCCESS_MESSAGE: //登录成功，则跳转到主界面，即查询个人信息界面
                     Intent intent = new Intent(Login.this, MainActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("studentID", txt_login_usr.getText().toString()); //传递学号
+                    intent.putExtras(bundle);
                     startActivity(intent);
+                    //intent.putExtra("studentID",txt_login_usr.getText().toString());
+                    //System.out.println(intent.getStringExtra("studentID"));
                     finish();
                     break;
                 case LOGIN_FAIL_MESSAGE:
