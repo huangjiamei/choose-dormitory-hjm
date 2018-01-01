@@ -26,6 +26,12 @@
         <activity android:name=".MainActivity">
         </activity>
 
+        <activity android:name=".QueryRemainBeds">
+        </activity>
+
+        <activity android:name=".Choose">
+        </activity>
+
     </application>
 
 </manifest>

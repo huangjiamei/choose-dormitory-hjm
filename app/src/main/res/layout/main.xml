@@ -18,7 +18,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="查询个人信息"
+                    android:text="个人信息"
                     android:textSize="20dp"
                     android:textColor="@android:color/white"/>
 
@@ -29,6 +29,15 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/back"/>
+
+                <ImageView
+                    android:id="@+id/main_btn_search"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="#104E8B"
+                    android:src="@drawable/search"/>
 
 
         </RelativeLayout>

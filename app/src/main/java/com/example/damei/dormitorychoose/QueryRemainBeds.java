@@ -29,73 +29,75 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * Created by damei on 17/12/29.
+ * Created by damei on 18/1/1.
  */
 
-public class MainActivity extends Activity implements View.OnClickListener{
+public class QueryRemainBeds extends Activity implements View.OnClickListener{
     private String studentID = null; //学号
+    private String gender = null; //性别
+    private ImageView btn_query_remain_beds_exit; //返回按钮
+    private ImageView btn_query_remain_beds_choose; //选择宿舍按钮
 
-    private ImageView btn_main_exit; //退出按钮
-    private ImageView btn_main_search; //查询按钮
+    private static final int QUERY_REMAIN_BEDS_SUCCESS = 1;
+    private static final int QUERY_REMAIN_BEDS_FAIL= 0;
 
-    private TextView stuID, stuName, stuGender, status, buildingNum, dormitoryNum, vcode; //定义相关控件对象
-
-    private String stuid, stuname, stugender, Status, buildingnum, dormitorynum, Vcode; //相关信息
-
-    private static final int UPDATE_STUINFO_SUCCESS = 1;
-    private static final int UPDATE_STUINFO_FAIL = 0;
-    private static final int GET_STUINFO_FAIL = 2;
+    private TextView remain_five, remain_eight, remain_nine, remain_thirteen, remain_fourteen; //定义相关控件对象
+    private String five, eight, nine, thirtheen, fourteen; //相关信息
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main); //加载布局
+        setContentView(R.layout.query_remain_beds); //加载布局
 
         //初始化
-        stuID = (TextView) findViewById(R.id.main_stuid);
-        stuName = (TextView) findViewById(R.id.main_stuname);
-        stuGender = (TextView) findViewById(R.id.main_gender);
-        status = (TextView) findViewById(R.id.main_status);
-        buildingNum = (TextView) findViewById(R.id.main_buildingnum);
-        dormitoryNum = (TextView) findViewById(R.id.main_dormitorynum);
-        vcode = (TextView) findViewById(R.id.main_vcode);
+        remain_five = (TextView) findViewById(R.id.query_remain_beds_five);
+        remain_eight = (TextView) findViewById(R.id.query_remain_beds_eight);
+        remain_nine = (TextView) findViewById(R.id.query_remain_beds_nine);
+        remain_thirteen = (TextView) findViewById(R.id.query_remain_beds_thirteen);
+        remain_fourteen = (TextView) findViewById(R.id.query_remain_beds_fourteen);
 
-        btn_main_exit = (ImageView) findViewById(R.id.main_btn_back);
-        btn_main_exit.setOnClickListener(this);
+        btn_query_remain_beds_exit = (ImageView) findViewById(R.id.query_remain_beds_btn_back);
+        btn_query_remain_beds_exit.setOnClickListener(this);
+        btn_query_remain_beds_choose = (ImageView) findViewById(R.id.query_remain_beds_btn_choose);
+        btn_query_remain_beds_choose.setOnClickListener(this);
 
-        btn_main_search = (ImageView) findViewById(R.id.main_btn_search);
-        btn_main_search.setOnClickListener(this);
-
-        //获取学号
+        //获取学号和性别
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         studentID = bundle.getString("studentID");
-        //studentID = intent.getStringExtra("studentID");
-        //System.out.println(studentID);
-        getStuInfoJson(studentID); //获取网络数据
+        gender = bundle.getString("gender");
+
+        getRemainBeds(gender); //获取网络数据
     }
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.main_btn_back) { //退回到登录界面
-            Intent intent = new Intent(MainActivity.this, Login.class);
+        if(view.getId() == R.id.query_remain_beds_btn_back) { //退回到个人信息界面
+            Intent intent = new Intent(QueryRemainBeds.this, MainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("studentID", studentID); //传递学号
+            intent.putExtras(bundle);
             startActivity(intent);
             finish();
         }
-        if(view.getId() == R.id.main_btn_search) { //跳转到查询剩余床位数界面
-            Intent intent = new Intent(MainActivity.this, QueryRemainBeds.class);
+        if(view.getId() == R.id.query_remain_beds_btn_choose) { //跳转到选宿舍界面
+            Intent intent = new Intent(QueryRemainBeds.this, Choose.class);
             Bundle bundle = new Bundle();
             bundle.putString("studentID", studentID); //传递学号
-            bundle.putString("gender", stugender); //传递性别
+            bundle.putString("gender", gender);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
         }
     }
 
-    public void getStuInfoJson(String stuid) {
-        final String address = "https://api.mysspku.com/index.php/V1/MobileCourse/getDetail?" + "stuid=" + stuid;
-        //System.out.println(address);
+    public void getRemainBeds(String stugender) {
+        String gender = null;
+        if(stugender == "女")
+            gender = "2";
+        else
+            gender = "1";
+        final String address = "https://api.mysspku.com/index.php/V1/MobileCourse/getRoom?" + "gender=" + gender;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -117,8 +119,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
                     while ((str = bufferedReader.readLine()) != null)
                         response.append(str);
                     String responseStr = response.toString();
-                    Log.d("StudentDomitoryInfo", responseStr); //显示返回的信息
-                    decodeStuInfoJson(responseStr); //解析返回的json数据
+                    Log.d("ReaminBedsInfo", responseStr); //显示返回的信息
+                    decodeRemainBedsInfoJson(responseStr); //解析返回的json数据
                 }catch (Exception e){
                     e.printStackTrace();
                 }finally {
@@ -159,33 +161,23 @@ public class MainActivity extends Activity implements View.OnClickListener{
         }
     };
 
-    public void decodeStuInfoJson(String str) {
+    public void decodeRemainBedsInfoJson(String str) {
         try{
             JSONObject jsonObject = new JSONObject(str);
             int errcode = jsonObject.getInt("errcode");
             JSONObject jsonData = jsonObject.getJSONObject("data");
-            if(errcode != 40001) { //学号不存在的返回信息
-                stuid = jsonData.getString("studentid");
-                stuname = jsonData.getString("name");
-                stugender = jsonData.getString("gender");
-                Vcode = jsonData.getString("vcode");
-                if (Integer.parseInt(stuid) % 2 == 0) { //学号为偶数的学生办理成功
-                    Status = "已办理";
-                    buildingnum = jsonData.getString("building");
-                    dormitorynum = jsonData.getString("room");
-                } else {
-                    Status = "未办理";
-                    buildingnum = "未办理";
-                    dormitorynum = "未办理";
-                }
+            if(errcode == 0) {
+                five = jsonData.getString("5");
+                eight = jsonData.getString("8");
+                nine = jsonData.getString("9");
+                thirtheen = jsonData.getString("13");
+                fourteen = jsonData.getString("14");
             }
             Message msg = new Message();
-            if(errcode == 40001)
-                msg.what = GET_STUINFO_FAIL;
-            else if(errcode == 0)
-                msg.what = UPDATE_STUINFO_SUCCESS;
+            if(errcode == 0)
+                msg.what = QUERY_REMAIN_BEDS_SUCCESS;
             else
-                msg.what = UPDATE_STUINFO_FAIL;
+                msg.what = QUERY_REMAIN_BEDS_FAIL;
             handler.sendMessage(msg);
         }catch (JSONException e) {
             e.printStackTrace();
@@ -196,20 +188,15 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch(msg.what) {
-                case UPDATE_STUINFO_SUCCESS: //能获取到学生的信息
-                    stuID.setText(stuid);
-                    stuName.setText(stuname);
-                    stuGender.setText(stugender);
-                    status.setText(Status);
-                    buildingNum.setText(buildingnum);
-                    dormitoryNum.setText(dormitorynum);
-                    vcode.setText(Vcode);
+                case QUERY_REMAIN_BEDS_SUCCESS: //能获取到学生的信息
+                    remain_five.setText(five);
+                    remain_eight.setText(eight);
+                    remain_nine.setText(nine);
+                    remain_thirteen.setText(thirtheen);
+                    remain_fourteen.setText(fourteen);
                     break;
-                case UPDATE_STUINFO_FAIL: //不能获取学生信息
-                    Toast.makeText(MainActivity.this, "该学生目前无信息！", Toast.LENGTH_LONG).show();
-                    break;
-                case GET_STUINFO_FAIL: //不能获取学生信息
-                    Toast.makeText(MainActivity.this, "该学号不存在！", Toast.LENGTH_LONG).show();
+                case QUERY_REMAIN_BEDS_FAIL: //不能获取学生信息
+                    Toast.makeText(QueryRemainBeds.this, "该学生目前无信息！", Toast.LENGTH_LONG).show();
                     break;
                 default:
                     break;
@@ -218,4 +205,3 @@ public class MainActivity extends Activity implements View.OnClickListener{
     };
 
 }
-
