@@ -87,6 +87,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             Bundle bundle = new Bundle();
             bundle.putString("studentID", studentID); //传递学号
             bundle.putString("gender", stugender); //传递性别
+            bundle.putString("vcode", Vcode); //传递校验码
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
@@ -164,21 +165,52 @@ public class MainActivity extends Activity implements View.OnClickListener{
             JSONObject jsonObject = new JSONObject(str);
             int errcode = jsonObject.getInt("errcode");
             JSONObject jsonData = jsonObject.getJSONObject("data");
-            if(errcode != 40001) { //学号不存在的返回信息
+            if(errcode != 40001) { //40001学号不存在的返回信息
                 stuid = jsonData.getString("studentid");
                 stuname = jsonData.getString("name");
                 stugender = jsonData.getString("gender");
                 Vcode = jsonData.getString("vcode");
-                if (Integer.parseInt(stuid) % 2 == 0) { //学号为偶数的学生办理成功
-                    Status = "已办理";
-                    buildingnum = jsonData.getString("building");
-                    dormitorynum = jsonData.getString("room");
-                } else {
-                    Status = "未办理";
-                    buildingnum = "未办理";
-                    dormitorynum = "未办理";
+
+                Intent intent = getIntent();
+                Bundle bundle = intent.getExtras();
+                Status = bundle.getString("status");
+                System.out.println(Status);
+                if(Status == null) {
+                    if (Integer.parseInt(stuid) % 2 == 0) { //学号为偶数的学生办理成功
+                        Status = "已办理";
+                        buildingnum = jsonData.getString("building");
+                        dormitorynum = jsonData.getString("room");
+                    } else {
+                        if (Status != "已办理") {
+                            Status = "未办理";
+                            buildingnum = "未办理";
+                            dormitorynum = "未办理";
+                        }
+                    }
+                }
+                else if(!Status.equals("已办理")){
+                    System.out.println(Status);
+                    if (Integer.parseInt(stuid) % 2 == 0) { //学号为偶数的学生办理成功
+                        Status = "已办理";
+                        buildingnum = jsonData.getString("building");
+                        dormitorynum = jsonData.getString("room");
+                    } else {
+                        if (Status != "已办理") {
+                            Status = "未办理";
+                            buildingnum = "未办理";
+                            dormitorynum = "未办理";
+                        }
+                        //System.out.println(Status);
+                    }
+                }
+                else {
+                    buildingnum = bundle.getString("building");
+                    dormitorynum = bundle.getString("dormitory");
                 }
             }
+            System.out.println(Status);
+            System.out.println(buildingnum);
+            System.out.println(dormitorynum);
             Message msg = new Message();
             if(errcode == 40001)
                 msg.what = GET_STUINFO_FAIL;
@@ -197,6 +229,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
         public void handleMessage(Message msg) {
             switch(msg.what) {
                 case UPDATE_STUINFO_SUCCESS: //能获取到学生的信息
+                    //System.out.println(Status);
+                    //System.out.println(buildingnum);
+                    //System.out.println(dormitorynum);
                     stuID.setText(stuid);
                     stuName.setText(stuname);
                     stuGender.setText(stugender);

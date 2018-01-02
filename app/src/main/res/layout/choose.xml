@@ -14,7 +14,6 @@
         android:layout_alignParentStart="true">
 
         <TextView
-            android:id="@+id/choose_title_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -30,6 +29,270 @@
             android:layout_centerVertical="true"
             android:src="@drawable/back"/>
 
-
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/choose_title"
+        android:orientation="vertical"
+        android:background="#F5F5F5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:showDividers="beginning|middle|end">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="总办理人数"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+
+               <!-- <TextView
+                    android:id="@+id/choose_persons"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/> -->
+
+                <Spinner
+                    android:id="@+id/spinner_choose_persons"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical">
+                </Spinner>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="楼号"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+
+             <!--   <TextView
+                    android:id="@+id/choose_buildings"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/> -->
+
+                <Spinner
+                    android:id="@+id/spinner_choose_bulidings"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical">
+                </Spinner>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:showDividers="beginning|middle|end">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="同住人1"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+
+                <EditText
+                    android:id="@+id/roommate1_stuid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingRight="15dp"
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#878787"
+                    android:hint="学号"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="100dp"
+                android:background="@android:color/white">
+
+                <EditText
+                    android:id="@+id/roommate1_vcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingRight="15dp"
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#878787"
+                    android:hint="校验码"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:showDividers="beginning|middle|end">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="同住人2"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+
+                <EditText
+                    android:id="@+id/roommate2_stuid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingRight="15dp"
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#878787"
+                    android:hint="学号"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="100dp"
+                android:background="@android:color/white">
+
+                <EditText
+                    android:id="@+id/roommate2_vcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingRight="15dp"
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#878787"
+                    android:hint="校验码"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:showDividers="beginning|middle|end">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="15dp"
+                    android:gravity="center_vertical"
+                    android:text="同住人3"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+
+                <EditText
+                    android:id="@+id/roommate3_stuid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingRight="15dp"
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#878787"
+                    android:hint="学号"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingLeft="100dp"
+                android:background="@android:color/white">
+
+                <EditText
+                    android:id="@+id/roommate3_vcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingRight="15dp"
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#878787"
+                    android:hint="校验码"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/choose_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#AAAAAA"
+            android:text="提交"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

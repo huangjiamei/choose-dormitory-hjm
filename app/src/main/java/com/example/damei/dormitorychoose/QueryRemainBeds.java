@@ -35,6 +35,7 @@ import javax.net.ssl.X509TrustManager;
 public class QueryRemainBeds extends Activity implements View.OnClickListener{
     private String studentID = null; //学号
     private String gender = null; //性别
+    private String vcode = null; //校验码
     private ImageView btn_query_remain_beds_exit; //返回按钮
     private ImageView btn_query_remain_beds_choose; //选择宿舍按钮
 
@@ -66,6 +67,7 @@ public class QueryRemainBeds extends Activity implements View.OnClickListener{
         Bundle bundle = intent.getExtras();
         studentID = bundle.getString("studentID");
         gender = bundle.getString("gender");
+        vcode = bundle.getString("vcode");
 
         getRemainBeds(gender); //获取网络数据
     }
@@ -85,6 +87,7 @@ public class QueryRemainBeds extends Activity implements View.OnClickListener{
             Bundle bundle = new Bundle();
             bundle.putString("studentID", studentID); //传递学号
             bundle.putString("gender", gender);
+            bundle.putString("vcode", vcode);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
